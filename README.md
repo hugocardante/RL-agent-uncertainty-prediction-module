@@ -59,8 +59,12 @@ and the two folders that contain the models in:
 The [conformal models folder](./src/conformalized_models/) contains the code for the conformalized models
 New conformal models must be added to this directory
 
-The [stl rules folder](./src/stl_rules/) contains the code for the STL rules
-New stl rules must be added to this directory
+The [stl rules folder](./src/stl_rules/) contains the code for the implemented STL rule.
+New stl rules must be added to this directory.
+
+Important - The STL rules assume we are checking if a trajectory is safe/unsafe.
+If we are trying to predict something else, it might not work to just create a rule
+in the rules folder, and the structure must be refactored.
 
 For more information, consult each folders README.
 
