@@ -65,7 +65,7 @@ class HBGB_14(Forecaster):
             )
             new_obs = self._extract_timestamp_info(new_obs, new_timestamp)
 
-            data = self._get_features(observations_array, new_obs, step).reshape(1, -1)
+            data = self._get_features(observations_array, new_obs, 0).reshape(1, -1)
             y_pred = self.model.predict(data)[0]
 
             load_p.append(np.array(np.round(y_pred[0:11], 3)))
