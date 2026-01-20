@@ -1,0 +1,9 @@
+[tool.basedpyright]
+typeCheckingMode = "basic"
+reportAny = false
+reportExplicitAny = false
+reportAttributeAccessIssue = false
+reportMissingTypeStubs = false
+
+# [tool.pycodestyle]
+# ignore = W503
