@@ -101,5 +101,10 @@ def ignore_warnings() -> None:
         "The initializer Orthogonal is unseeded and being called multiple times",
     ]
 
+    runtime_warnings_to_ignore = ["divide by zero*", "invalid value*"]
+
     for warning in warnings_to_ignore:
         warnings.filterwarnings("ignore", warning)
+
+    for runtime_warning in runtime_warnings_to_ignore:
+        warnings.filterwarnings("ignore", runtime_warning, category=RuntimeWarning)

@@ -56,10 +56,6 @@ def run_calibration_episode(
     # all the trajectories in this calibration episode (see TrajectoryManager)
     trajectory_manager = TrajectoryManager(warmup_cutoff)
 
-    print(
-        f"Running calibration episode on chronic_id: {env.chronics_handler.data.path}  "
-        f"DEBUG (check if same): {chronic_id}"
-    )
     done, reward, step = False, 0, 0
     n_steps = config.STEPS_TO_RUN
 

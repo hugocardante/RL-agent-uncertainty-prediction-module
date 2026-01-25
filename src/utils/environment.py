@@ -1,8 +1,6 @@
 import datetime
-from typing import Any
 
 import grid2op
-import joblib
 from grid2op.Action import BaseAction, PowerlineSetAction
 from grid2op.Environment import Environment
 from grid2op.Opponent import BaseActionBudget, RandomLineOpponent
@@ -33,7 +31,6 @@ def create_environment(
     print(f"Initializing Grid2Op environment: {config.ENV_NAME} with seed {env_seed}")
 
     if not lines_attacked:
-        print("No lines attacked...")
         env = grid2op.make(
             config.ENV_NAME,
             backend=LightSimBackend(),

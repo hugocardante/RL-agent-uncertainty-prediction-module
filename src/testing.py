@@ -158,7 +158,6 @@ def run_test_episodes(
     ]
 
     # execute episodes in parallel
-    # only casting to not get type warnings (returning union)
     # we can do this because we are sure the function returns
     # the list we are expecting..
     results: list[TestEpisodeWorkerReturn] = run_parallel_jobs(

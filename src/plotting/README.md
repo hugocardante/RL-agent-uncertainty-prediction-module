@@ -2,6 +2,40 @@
 
 Plotting utilities for visualizing conformal prediction results and STL (Signal Temporal Logic) verification data from running the power grid simulation.
 
+## Different ways to use the plotting script
+
+If the experience has several episodes we might not be interested in plotting all of them.
+
+For this we set the `AUTO_GEN_PLOTS = False` option in [config.py](../config.py) and we use the [plotting_script.py](../plotting_script.py) manually.
+
+Ways to use:
+
+```sh
+python plotting_script <FOLDER_CONTAINING_CSVS> # Plots inside the same folder
+
+# or
+
+python plotting_script <FOLDER_CONTAINING_CSVS> <OPTIONAL_OUTPUT_FOLDER> # Plots inside the folder specified in OPTIONAL_OUTPUT_FOLDER
+```
+
+Some examples:
+
+```sh
+python plotting_script.py RESULTS/MY_EXP/ OPTIONAL_OUTPUT_FOLDER
+
+# or
+
+python plotting_script.py RESULTS/MY_EXP/alpha_0.1/ OPTIONAL_OUTPUT_FOLDER
+
+#or
+
+python plotting_script.py RESULTS/MY_EXP/alpha_0.1/episode_13/ OPTIONAL_OUTPUT_FOLDER
+
+# or
+
+python plotting_script.py RESULTS/MY_EXP/alpha_0.1/aggregated_csvs/ OPTIONAL_OUTPUT_FOLDER
+```
+
 ## Modules
 
 ### `plotting_config.py`

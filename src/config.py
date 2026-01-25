@@ -14,16 +14,16 @@ BASE_CHRONIC = 900
 # number of episodes from which we collect the
 # calibration dataset. For example, if BASE_CHRONIC = 900 and
 # CALIB_EPISODES = 30, then we collect data from episode 901 to 930
-CALIB_EPISODES = 15
+CALIB_EPISODES = 30
 # number of test episodes. They execute after the calibration, for example
 # if BASE_CHRONIC = 900, and CALIB_EPISODES = 30 and TEST_EPISODES = 30,
 # then the test episodes are 931 to 960
-TEST_EPISODES = 1
+TEST_EPISODES = 30
 STEPS_TO_RUN = 8064
 
 
 # The directory in which the results will be placed
-OUTPUT_DIR = "RESULTS/ERASE_ME"
+OUTPUT_DIR = "RESULTS/MY_EXP"
 
 
 # These four parameters are for cache only
@@ -69,15 +69,15 @@ MODELS = {
     "vanilla": (True, "vanilla"),
     "knn_norm": (True, "knn_norm"),
     "aci": (True, "aci"),
-    "knn_norm_with_aci": (True, "knn_norm_with_aci"),
+    # "knn_norm_with_aci": (True, "knn_norm_with_aci"),
 }
 
 
 # These are the STL files for the rule psi := G[1,12](rho ≤ threshold)
 # Format: "rule_name": (enabled, module_name (without .py))
 STL_RULE = {
-    "vanilla_rule": (True, "vanilla_rule"),
-    "knn_norm_rule": (True, "knn_norm_rule"),
+    # "vanilla_rule": (True, "vanilla_rule"),
+    # "knn_norm_rule": (True, "knn_norm_rule"),
 }
 # the rho value above which a line is considered unsafe
 RHO_SAFETY_THRESHOLD = 0.95
@@ -89,22 +89,54 @@ OPPONENT_ATTACK_COOLDOWN = 12 * 24  # cooldown of a day
 OPPONENT_ATTACK_DURATION = 12 * 4  # 4 hours
 OPPONENT_BUDGET_PER_TS = 0.5  # opponent_attack_duration
 OPPONENT_INIT_BUDGET = 0.0
-CALIBRATION_LINES_ATTACKED = [
-    "1_3_3",
-    "1_4_4",
-    "3_6_15",
-    "9_10_12",
-    "11_12_13",
-    "12_13_14",
-]
-TESTING_LINES_ATTACKED = [
-    "1_3_3",
-    "1_4_4",
-    "3_6_15",
-    "9_10_12",
-    "11_12_13",
-    "12_13_14",
-]
+CALIBRATION_LINES_ATTACKED = []
+TESTING_LINES_ATTACKED = []
+
+# We use this configuration in our experiences
+# when we use the opponent in case_14
+# CALIBRATION_LINES_ATTACKED = [
+#     "1_3_3",
+#     "1_4_4",
+#     "3_6_15",
+#     "9_10_12",
+#     "11_12_13",
+#     "12_13_14",
+# ]
+# TESTING_LINES_ATTACKED = [
+#     "1_3_3",
+#     "1_4_4",
+#     "3_6_15",
+#     "9_10_12",
+#     "11_12_13",
+#     "12_13_14",
+# ]
+
+# We use this configuration in our experiences
+# when we use the opponent in case_36
+# CALIBRATION_LINES_ATTACKED = [
+#     "62_58_180",
+#     "62_63_160",
+#     "48_50_136",
+#     "48_53_141",
+#     "41_48_131",
+#     "39_41_121",
+#     "43_44_125",
+#     "44_45_126",
+#     "34_35_110",
+#     "54_58_154",
+# ]
+# TESTING_LINES_ATTACKED = [
+#     "62_58_180",
+#     "62_63_160",
+#     "48_50_136",
+#     "48_53_141",
+#     "41_48_131",
+#     "39_41_121",
+#     "43_44_125",
+#     "44_45_126",
+#     "34_35_110",
+#     "54_58_154",
+# ]
 
 
 # Environment, agent and predictor config

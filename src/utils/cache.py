@@ -1,6 +1,7 @@
 # TODO: In the future, maybe cache the STL rules as well
 # at the moment, we always have to train them
 
+import hashlib
 import os
 import pickle
 from typing import TYPE_CHECKING
@@ -117,6 +118,14 @@ class DataManager:
             f"an{config.AGENT_NAME}_"
             f"fn{config.FORECASTER_CLASS}"
         )
+
+        # if the filename is too large, then it will fail to save the file
+        # to prevent this we hash the filename and return the hash
+        if len(filename) > 200:
+            filename = (
+                f"calib_{mode}_" + hashlib.sha256(filename.encode("utf-8")).hexdigest()
+            )
+
         return filename
 
     def _get_episode_cache_path(
@@ -134,8 +143,15 @@ class DataManager:
         """
         filename = self._generate_calibration_filename()
         bitmask = lines_to_bitmask(attacked_lines)
-        mypath = f"{filename}_attacked{bitmask}_episode_{episode_idx}.pkl"
-        return os.path.join(self.cache_dir, mypath)
+        base = f"{filename}_attacked{bitmask}_episode_{episode_idx}"
+        path = base + ".pkl"
+
+        # if the filename is too large, then it will fail to save the file
+        # to prevent this we hash the filename and return the hash
+        if len(path) > 200:
+            path = hashlib.sha256(base.encode("utf-8")).hexdigest() + ".pkl"
+
+        return os.path.join(self.cache_dir, path)
 
     def episode_exists(self, attacked_lines: list[int], episode_idx: int) -> bool:
         """

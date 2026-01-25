@@ -39,6 +39,7 @@ class HBGB_14(Forecaster):
         obs: BaseObservation,
         observations_array: list[SimpleObservation],
         agent: BaseAgent,
+        **kwargs,
     ) -> tuple[
         dict[datetime.datetime, list[float]],
         set[datetime.datetime],
@@ -65,7 +66,7 @@ class HBGB_14(Forecaster):
             )
             new_obs = self._extract_timestamp_info(new_obs, new_timestamp)
 
-            data = self._get_features(observations_array, new_obs, 0).reshape(1, -1)
+            data = self._get_features(observations_array, new_obs).reshape(1, -1)
             y_pred = self.model.predict(data)[0]
 
             load_p.append(np.array(np.round(y_pred[0:11], 3)))
@@ -173,30 +174,30 @@ class HBGB_14(Forecaster):
         return features
 
     @staticmethod
-    def _get_past_value_load_p(observations_array, step, steps):
-        past_index = len(observations_array) + step - steps
+    def _get_past_value_load_p(observations_array, steps):
+        past_index = len(observations_array) - steps
         if 0 <= past_index < len(observations_array):
             return observations_array[past_index].load_p
         else:
             return [None] * 11
 
     @staticmethod
-    def _get_past_value_load_q(observations_array, step, steps):
-        past_index = len(observations_array) + step - steps
+    def _get_past_value_load_q(observations_array, steps):
+        past_index = len(observations_array) - steps
         if 0 <= past_index < len(observations_array):
             return observations_array[past_index].load_q
         else:
             return [None] * 11
 
     @staticmethod
-    def _get_past_value_gen_p(observations_array, step, steps):
-        past_index = len(observations_array) + step - steps
+    def _get_past_value_gen_p(observations_array, steps):
+        past_index = len(observations_array) - steps
         if 0 <= past_index < len(observations_array):
             return observations_array[past_index].gen_p
         else:
             return [None] * 6
 
-    def _get_features(self, observations_array, obs, step):
+    def _get_features(self, observations_array, obs):
         features = []
 
         day = obs.day
@@ -204,17 +205,17 @@ class HBGB_14(Forecaster):
         minute = obs.minute_of_hour
         day_of_week = obs.day_of_week
 
-        load_p_hour_before = self._get_past_value_load_p(observations_array, step, 12)
-        load_p_day_before = self._get_past_value_load_p(observations_array, step, 288)
-        load_p_week_before = self._get_past_value_load_p(observations_array, step, 2016)
+        load_p_hour_before = self._get_past_value_load_p(observations_array, 12)
+        load_p_day_before = self._get_past_value_load_p(observations_array, 288)
+        load_p_week_before = self._get_past_value_load_p(observations_array, 2016)
 
-        load_q_hour_before = self._get_past_value_load_q(observations_array, step, 12)
-        load_q_day_before = self._get_past_value_load_q(observations_array, step, 288)
-        load_q_week_before = self._get_past_value_load_q(observations_array, step, 2016)
+        load_q_hour_before = self._get_past_value_load_q(observations_array, 12)
+        load_q_day_before = self._get_past_value_load_q(observations_array, 288)
+        load_q_week_before = self._get_past_value_load_q(observations_array, 2016)
 
-        gen_p_hour_before = self._get_past_value_gen_p(observations_array, step, 12)
-        gen_p_day_before = self._get_past_value_gen_p(observations_array, step, 288)
-        gen_p_week_before = self._get_past_value_gen_p(observations_array, step, 2016)
+        gen_p_hour_before = self._get_past_value_gen_p(observations_array, 12)
+        gen_p_day_before = self._get_past_value_gen_p(observations_array, 288)
+        gen_p_week_before = self._get_past_value_gen_p(observations_array, 2016)
 
         features = self._sort_loads_power(
             features, load_p_week_before, load_p_day_before, load_p_hour_before

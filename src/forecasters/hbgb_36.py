@@ -99,7 +99,7 @@ class HBGB_36(Forecaster):
 
             agent_action = agent.act(forecast_obs, reward=0, done=False)
             forecasted_obs_with_agent_action, _, forecast_done, _ = (
-                forecast_obs.simulate(agent_action, time_step=1)
+                forecast_obs.simulate(agent_action)
             )
 
             agent_forecast_dict[timestamps[i]] = (
@@ -109,8 +109,8 @@ class HBGB_36(Forecaster):
             forecasted_obs_with_agent_action = self._create_clean_obs(
                 forecasted_obs_with_agent_action, forecast_obs
             )
-
             forecast_obs = forecasted_obs_with_agent_action
+
             i += 1
             if forecast_done or i == config.HORIZON:
                 break
@@ -195,12 +195,11 @@ class HBGB_36(Forecaster):
         value_sin = np.sin(2 * np.pi * value / max_value)
         return value_cos, value_sin
 
-    # FIX: Isto é experimental, um hack vá. Confirmar com a margarida
     @staticmethod
     def _create_clean_obs(simulated_obs, base_obs):
         clean_obs = base_obs.copy()
 
-        # a ideia é copiar os atributos que já existiam um a um
+        # the idea is to copy each attribute one by one
         for attr in base_obs.attr_list_vect:
             setattr(clean_obs, attr, getattr(simulated_obs, attr))
         return clean_obs
